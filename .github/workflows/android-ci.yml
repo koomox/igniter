@@ -31,16 +31,22 @@ jobs:
               run: curl -L https://github.com/trojan-gfw/igniter-go-libs/releases/download/1.10/golibs.aar > app/src/libs/golibs.aar
                 
             - name: Download Dependencies
-              run: ./gradlew androidDependencies
+              run: bash ./gradlew androidDependencies
 
             - name: Run Tests
-              run: ./gradlew lint test
+              run: bash ./gradlew lint test
 
             - name: Build with Gradle
-              run: ./gradlew build
+              run: bash ./gradlew build
 
             - name: Initial build
-              run: ./gradlew clean assembleRelease --no-daemon --stacktrace
+              run: bash ./gradlew clean assembleRelease --no-daemon --stacktrace
 
             - name: Deploy Igniter
-              run: ./gradlew crashlyticsUploadDistributionProductionRelease --stacktrace --debug --no-daemon
+              run: bash ./gradlew crashlyticsUploadDistributionProductionRelease --stacktrace --debug --no-daemon
+
+            - name: Upload
+              uses: actions/upload-artifact@master
+              with:
+                name: app-release
+                path: app/build/outputs/apk/apks/app-release.apk
