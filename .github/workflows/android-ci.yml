@@ -9,6 +9,8 @@ jobs:
     build:
         name: Build
         runs-on: ubuntu-latest
+        env:
+          JVM_OPTS: -Xmx4G
         
         steps:
             - name: Checkout
