@@ -29,6 +29,12 @@ jobs:
                 
             - name: Download Dependencies
               run: ./gradlew androidDependencies
-                
+
+            - name: Run Tests
+              run: ./gradlew lint test
+
             - name: Initial build
               run: ./gradlew clean assembleRelease --no-daemon --stacktrace
+
+            - name: Deploy Igniter
+              run: ./gradlew crashlyticsUploadDistributionProductionRelease --stacktrace --debug --no-daemon
